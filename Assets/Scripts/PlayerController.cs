@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
         {
             hasPowerup = true;
             Destroy(other.gameObject);
+
+            StartCoroutine("ExpirePowerup");
         }
     }
 
@@ -44,5 +46,12 @@ public class PlayerController : MonoBehaviour
             enemyRb.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
             Debug.Log("Collided with: " + collision.gameObject.name + " with powerup set to: " + hasPowerup);
         }
+    }
+
+    // This method creates a new thread
+    private IEnumerator ExpirePowerup()
+    {
+        yield return new WaitForSeconds(7);
+        hasPowerup = false;
     }
 }
