@@ -5,7 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 1.0f;
-    public bool hasPowerup;
+    private bool hasPowerup;
+    public bool HasPowerup
+    {
+        get
+        {
+            return hasPowerup;
+        }
+        set
+        {
+            hasPowerup = value;
+            onPowerupChange(value);
+        }
+    }
 
     private Rigidbody playerRb;
     private GameObject focalPoint;
@@ -29,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Powerup"))
         {
-            hasPowerup = true;
+            HasPowerup = true;
             Destroy(other.gameObject);
 
             StartCoroutine("ExpirePowerup");
@@ -38,13 +50,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && hasPowerup)
+        if (collision.gameObject.CompareTag("Enemy") && HasPowerup)
         {
             Rigidbody enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
 
             enemyRb.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
-            Debug.Log("Collided with: " + collision.gameObject.name + " with powerup set to: " + hasPowerup);
+            Debug.Log("Collided with: " + collision.gameObject.name + " with powerup set to: " + HasPowerup);
         }
     }
 
@@ -52,6 +64,12 @@ public class PlayerController : MonoBehaviour
     private IEnumerator ExpirePowerup()
     {
         yield return new WaitForSeconds(7);
-        hasPowerup = false;
+        HasPowerup = false;
+    }
+
+    private void onPowerupChange(bool hasPowerup)
+    {
+        Debug.Log("powerup changed");
+        GameObject.Find("Powerup Indicator").GetComponent<MeshRenderer>().enabled = hasPowerup;
     }
 }
