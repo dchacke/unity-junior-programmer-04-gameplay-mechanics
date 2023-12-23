@@ -18,9 +18,18 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MoveTowardPlayer();
+        DestroyOnFall();
+    }
+
+    private void MoveTowardPlayer()
+    {
         Vector3 direction = player.transform.position - transform.position;
         enemyRb.AddForce(direction.normalized * speed);
+    }
 
+    private void DestroyOnFall()
+    {
         if (transform.position.y < - 10)
         {
             Destroy(gameObject);
