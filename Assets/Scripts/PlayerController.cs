@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 1.0f;
+    public GameObject powerupIndicator;
+
     private bool hasPowerup;
     public bool HasPowerup
     {
@@ -70,6 +72,6 @@ public class PlayerController : MonoBehaviour
     private void onPowerupChange(bool hasPowerup)
     {
         Debug.Log("powerup changed");
-        GameObject.Find("Powerup Indicator").GetComponent<MeshRenderer>().enabled = hasPowerup;
+        powerupIndicator.SetActive(hasPowerup);
     }
 }
