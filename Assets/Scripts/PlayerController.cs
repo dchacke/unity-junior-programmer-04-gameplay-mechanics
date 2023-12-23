@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 1.0f;
+    public float speed;
     public GameObject powerupIndicator;
 
     private bool hasPowerup;
