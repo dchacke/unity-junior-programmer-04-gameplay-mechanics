@@ -18,13 +18,7 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemyCount = FindObjectsOfType<Enemy>().Length;
-
-        if (enemyCount == 0)
-        {
-            waveNumber++;
-            SpawnEnemyWave(waveNumber);
-        }
+        MonitorEnemies();
     }
 
     private void SpawnEnemyWave(int enemiesToSpawn)
@@ -41,5 +35,16 @@ public class SpawnManager : MonoBehaviour
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
 
         return new Vector3(spawnPosX, 0, spawnPosZ);
+    }
+
+    private void MonitorEnemies()
+    {
+        enemyCount = FindObjectsOfType<Enemy>().Length;
+
+        if (enemyCount == 0)
+        {
+            waveNumber++;
+            SpawnEnemyWave(waveNumber);
+        }
     }
 }
