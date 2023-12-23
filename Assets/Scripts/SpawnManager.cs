@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public int enemyCount;
     private float spawnRange = 9;
 
     // Start is called before the first frame update
@@ -16,7 +17,12 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        enemyCount = FindObjectsOfType<Enemy>().Length;
+
+        if (enemyCount == 0)
+        {
+            SpawnEnemyWave(1);
+        }
     }
 
     private void SpawnEnemyWave(int enemiesToSpawn)
